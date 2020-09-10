@@ -23,13 +23,18 @@ namespace Xbim.BCF
             Viewpoints = new List<BCFViewpoint>();
         }
 
-        public MarkupXMLFile(XDocument xdoc)
+        public MarkupXMLFile(XDocument xdoc, string version)
         {
             Comments = new List<BCFComment>();
             Viewpoints = new List<BCFViewpoint>();
-            if (xdoc.Root.Element("Header") != null)
-                Header = new BCFHeader(xdoc.Root.Element("Header"));
-            Topic = new BCFTopic(xdoc.Root.Element("Topic"));
+
+            //if (xdoc.Root.Element("Header") != null)
+                //Header = new BCFHeader(xdoc.Root.Element("Header"));
+            //Topic = new BCFTopic(xdoc.Root.Element("Topic"));
+
+            Header = new BCFHeader(xdoc.Root.Element("Header"));
+            Topic = new BCFTopic(xdoc.Root.Element("Topic"), version);
+
             foreach (var comment in (xdoc.Root.Elements("Comment")))
             {
                 Comments.Add(new BCFComment(comment));

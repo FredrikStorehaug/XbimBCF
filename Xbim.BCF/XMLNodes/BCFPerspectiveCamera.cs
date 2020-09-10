@@ -72,8 +72,13 @@ namespace Xbim.BCF.XMLNodes
             set
             {
                 if (value == double.NaN || value < 0 || value > 360)
+
                 {
                     throw new ArgumentException(this.GetType().Name + " - FieldOfView - must be a valid 64-bit floating-point value between 0 and 360");
+                }
+                if (value == 0)
+                {
+                    _fieldOfView = 60;
                 }
                 else
                 {
@@ -108,7 +113,7 @@ namespace Xbim.BCF.XMLNodes
                                                                    (double?)node.Element("CameraUpVector").Element("Y") ?? double.NaN,
                                                                    (double?)node.Element("CameraUpVector").Element("Z") ?? double.NaN);
 
-            FieldOfView = (double?)node.Element("FieldOfView") ?? double.NaN;
+            FieldOfView = (double?)node.Element("FieldOfView") ?? 60;
         }
     }
 }

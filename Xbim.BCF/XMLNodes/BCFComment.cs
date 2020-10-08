@@ -122,11 +122,11 @@ namespace Xbim.BCF.XMLNodes
             ModifiedDate = (DateTime?)node.Element("ModifiedDate") ?? null;
             ModifiedAuthor = (String)node.Element("ModifiedAuthor") ?? "";
 
-            var viewp = node.Elements("Viewpoint").FirstOrDefault();
+            var viewp = node.Elements("Viewpoint").FirstOrDefault() ?? node.Elements("Viewpoint_guid").FirstOrDefault();
             if (viewp != null)
             {
                 Viewpoint = new AttrIDNode(node.Element("Viewpoint"));
             }
-        }
+        } 
     }
 }

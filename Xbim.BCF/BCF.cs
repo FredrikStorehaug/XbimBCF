@@ -5,6 +5,8 @@ using System.IO.Compression;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
+using MoreLinq;
+using System.Linq;
 
 namespace Xbim.BCF
 {
@@ -39,7 +41,9 @@ namespace Xbim.BCF
             Topic currentTopic = null;
             Guid currentGuid = Guid.Empty;
             ZipArchive archive = new ZipArchive(BCFZipData);
-            foreach (ZipArchiveEntry entry in archive.Entries)
+			List<ZipArchiveEntry> orderdEntires = archive.Entries.OrderBy(o => o.FullName, OrderByDirection.Ascending).ToList();
+
+			foreach (ZipArchiveEntry entry in orderdEntires)
             {
                 if (entry.FullName.EndsWith(".bcfp", StringComparison.OrdinalIgnoreCase))
                 {
@@ -50,7 +54,7 @@ namespace Xbim.BCF
                     bcf.Version = new VersionXMLFile(XDocument.Load(entry.Open()));
                 }
             }
-            foreach (ZipArchiveEntry entry in archive.Entries)
+            foreach (ZipArchiveEntry entry in orderdEntires)
             {
                 if (entry.FullName.EndsWith(".bcf", StringComparison.OrdinalIgnoreCase))
                 {

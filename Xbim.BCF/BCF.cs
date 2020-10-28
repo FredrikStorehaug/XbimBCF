@@ -5,7 +5,6 @@ using System.IO.Compression;
 using System.IO;
 using System.Xml.Linq;
 using System.Xml.Serialization;
-using MoreLinq;
 using System.Linq;
 
 namespace Xbim.BCF
@@ -41,7 +40,7 @@ namespace Xbim.BCF
             Topic currentTopic = null;
             Guid currentGuid = Guid.Empty;
             ZipArchive archive = new ZipArchive(BCFZipData);
-			List<ZipArchiveEntry> orderdEntires = archive.Entries.OrderBy(o => o.FullName, OrderByDirection.Ascending).ToList();
+			List<ZipArchiveEntry> orderdEntires = archive.Entries.OrderBy(o => o.FullName).ToList();
 
 			foreach (ZipArchiveEntry entry in orderdEntires)
             {
